@@ -14,9 +14,9 @@ import argparse
 def read_tidal_data(filename):
     """df = data frame"""
     df = pd.read_csv(filename, sep="\s+", skiprows=11, header=None)
-    df.columns = ["Year","Month","Day","Hour","Minute","Second","Sea Level","Residual"]
+    df.columns = ["Index","Date","Time","Sea Level","Residual"]
     df.replace(to_replace=".*[A-Z]$",value={'Sea Level':np.nan},regex=True,inplace=True)
-    df["datetime"] = pd.to_datetime(df[["Year","Month","Day","Hour","Minute","Second"]])
+    df["datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
 
     return df[["datetime","Sea Level"]]
     
