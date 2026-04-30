@@ -18,7 +18,7 @@ def read_tidal_data(filename):
     df.replace(to_replace=".*[A-Z]$",value={'Sea Level':np.nan},regex=True,inplace=True)
     df["datetime"] = pd.to_datetime(df[["Year","Month","Day","Hour","Minute","Second"]])
 
-    return
+    return df[["datetime","Sea Level"]]
     
 def extract_single_year_remove_mean(year, data):
 
