@@ -24,8 +24,10 @@ def read_tidal_data(filename):
 
     
 def extract_single_year_remove_mean(year, data):
+    # Convert year into integer
+    year_int = int(year)
     # Filter data for a specific year
-    single_year_data = data[data.index.year == year]
+    single_year_data = data[data.index.year == year_int].copy
     # Calculating the mean sea level for that year
     annual_mean = single_year_data ["Sea Level"].mean()
     # Subracting the mean year from the data
