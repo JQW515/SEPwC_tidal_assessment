@@ -13,10 +13,10 @@ import argparse
 
 def read_tidal_data(filename):
     """df = data frame"""
-    df = pd.read_csv(filename, sep = "\s+", skiprows=11, header = None)
+    df = pd.read_csv(filename, sep = "\s+", skiprows = 11, header = None)
     df.columns = ["Index","Date","Time","Sea Level","Residual"]
     df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex = True,inplace = True)
-    df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors='coerce')
+    df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors = 'coerce')
     df["datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
     df.set_index("datetime", inplace=True)
 
@@ -24,9 +24,16 @@ def read_tidal_data(filename):
 
     
 def extract_single_year_remove_mean(year, data):
+    # Convert year into integer
+    year_int = int(year)
+    # Filter data for a specific year
+    single_year_data = data[data.index.year == year_int].copy()
+    # Calculating the mean sea level for that year
+    annual_mean = single_year_data ["Sea Level"].mean()
+    # Subracting the mean year from the data
+    single_year_data ["Sea Level"] = single_year_data ["Sea Level"] - annual_mean
     
-
-    return 
+    return single_year_data
 
 
 def extract_section_remove_mean(start, end, data):
