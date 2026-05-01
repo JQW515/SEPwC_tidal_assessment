@@ -28,6 +28,8 @@ def extract_single_year_remove_mean(year, data):
     single_year_data = data[data.index.year == year]
     # Calculating the mean sea level for that year
     annual_mean = single_year_data ["Sea Level"].mean()
+    # Subracting the mean year from the data
+    single_year_data ["Sea Level"] = single_year_data ["Sea Level"] - annual_mean
     
 
     return 
