@@ -21,7 +21,7 @@ def read_tidal_data(filename):
     df.set_index("datetime", inplace=True)
 
     return df[["Sea Level"]]
-    
+
     
 def extract_single_year_remove_mean(year, data):
     
