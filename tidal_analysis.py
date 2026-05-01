@@ -31,8 +31,7 @@ def extract_single_year_remove_mean(year, data):
     # Subracting the mean year from the data
     single_year_data ["Sea Level"] = single_year_data ["Sea Level"] - annual_mean
     
-
-    return 
+    return single_year_data
 
 
 def extract_section_remove_mean(start, end, data):
