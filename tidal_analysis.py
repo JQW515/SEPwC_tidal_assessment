@@ -35,12 +35,12 @@ def extract_section_remove_mean(start, end, data):
 
 
 def join_data(data1, data2):
-
-    return 
+    #ensuring the data in continuous and in correct order
+    return pd.concat([data1, data2]).sort_index()
 
 def sea_level_rise(data):
-
-    return
+     
+    return 
 
 def tidal_analysis(data, constituents, start_datetime):
 
