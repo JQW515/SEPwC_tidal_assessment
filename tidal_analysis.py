@@ -37,6 +37,8 @@ def extract_single_year_remove_mean(year, data):
 
 
 def extract_section_remove_mean(start, end, data):
+    section_data = data.loc[start:end].copy()
+    
 
     return year_data
 
