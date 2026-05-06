@@ -37,8 +37,11 @@ def extract_single_year_remove_mean(year, data):
 
 
 def extract_section_remove_mean(start, end, data):
+    # Slice the data at the start and end
     section_data = data.loc[start:end].copy()
+    # Calculate the mean of the Sea Level within the section of data
     section_mean = section_data["Sea Level"].mean()
+    # Subtract the mean from the Sea Level data
     section_data["Sea Level"] = section_data["Sea Level"] - section_mean
     
     return section_data
