@@ -12,7 +12,7 @@ import argparse
 
 
 def read_tidal_data(filename):
-    """df = data frame"""
+    # df = data frame
     df = pd.read_csv(filename, sep = "\s+", skiprows = 11, header = None)
     df.columns = ["Index","Date","Time","Sea Level","Residual"]
     df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex = True,inplace = True)
