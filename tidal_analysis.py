@@ -67,6 +67,7 @@ def get_longest_contiguous_data(data):
     expected_step = time_diffs.mode().iloc[0]
     gap_mask = time_diffs > expected_step
     group_ids = gap_mask.cumsum()
+    largest_group_id = group_ids.value_counts().idxmax()
     
 
     return 
