@@ -68,9 +68,10 @@ def get_longest_contiguous_data(data):
     gap_mask = time_diffs > expected_step
     group_ids = gap_mask.cumsum()
     largest_group_id = group_ids.value_counts().idxmax()
+    longest_data = data[group_ids == largest_group_id].copy()
     
 
-    return 
+    return longest_data
 
 
 def main(args_list=None):
