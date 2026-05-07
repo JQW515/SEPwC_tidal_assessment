@@ -60,8 +60,23 @@ def tidal_analysis(data, constituents, start_datetime):
     return
 
 def get_longest_contiguous_data(data):
+    # Calculate the differnce between rows within the data
+    time_diffs = data.index.to_series().diff()
+    # Checks for no gaps, if there are none, data is returned
+    if time_diffs.empty or len(time_diffs) <= 1:
+        return data
+    # Finding the mode step between data recordings
+    expected_step = time_diffs.mode().iloc[0]
+    # Indentifying where gaps larger than the mode gap
+    gap_mask = time_diffs > expected_step
+    # Assign each block of data a unique id
+    group_ids = gap_mask.cumsum()
+    # Finds which id block has the most rows
+    largest_group_id = group_ids.value_counts().idxmax()
+    # Filers out all data expect the largest block
+    longest_data = data[group_ids == largest_group_id].copy()
 
-    return 
+    return longest_data
 
 
 def main(args_list=None):
