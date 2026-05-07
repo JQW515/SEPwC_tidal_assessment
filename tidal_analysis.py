@@ -60,6 +60,8 @@ def tidal_analysis(data, constituents, start_datetime):
     return
 
 def get_longest_contiguous_data(data):
+    time_diffs = data.index.to_series().diff()
+    
 
     return 
 
