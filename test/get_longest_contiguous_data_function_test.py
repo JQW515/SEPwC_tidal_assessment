@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May  7 15:23:15 2026
-
-@author: tobyr
-"""
-
+import pandas as pd
+import numpy as np
+from tidal_analysis import get_longest_contiguous_data
