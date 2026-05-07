@@ -62,6 +62,9 @@ def tidal_analysis(data, constituents, start_datetime):
 def get_longest_contiguous_data(data):
     time_diffs = data.index.to_series().diff()
     
+    if time_diffs.empty or len(time_diffs) <= 1:
+        return data
+    
 
     return 
 
