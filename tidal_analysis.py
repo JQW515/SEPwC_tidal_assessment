@@ -64,6 +64,7 @@ def get_longest_contiguous_data(data):
     
     if time_diffs.empty or len(time_diffs) <= 1:
         return data
+    expected_step = time_diffs.mode().iloc[0]
     
 
     return 
