@@ -71,7 +71,7 @@ def tidal_analysis(data, constituents, start_datetime):
     # Convert the DatetimeIndex into seconds since that start time
     seconds = (data.index - data.index[0]).total_seconds().values
     # Performing the analysis
-    amp, pha = uptide.analysis.solve_least_squares(tide, data['Sea Level'].values, seconds)
+    amp, pha = uptide.harmonic_analysis.solve_least_squares(tide, data['Sea Level'].values, seconds)
     
     return amp, pha
 
