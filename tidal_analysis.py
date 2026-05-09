@@ -70,9 +70,10 @@ def tidal_analysis(data, constituents, start_datetime):
     tide.set_initial_time(data.index[0])
     # Convert the DatetimeIndex into seconds since that start time
     seconds = (data.index - data.index[0]).total_seconds().values
+    # Performing the analysis
+    amp, pha = uptide.analysis.solve_least_squares(tide, data['Sea Level'].values, seconds)
     
-
-    return
+    return amp, pha
 
 def get_longest_contiguous_data(data):
     # Calculate the differnce between rows within the data
