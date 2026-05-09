@@ -64,6 +64,8 @@ def sea_level_rise(data):
     return 
 
 def tidal_analysis(data, constituents, start_datetime):
+    # Create the tide object for the specific constituents
+    tide = uptide.Tides(constituents)
 
     return
 
