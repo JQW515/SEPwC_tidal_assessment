@@ -13,13 +13,21 @@ import argparse
 
 def read_tidal_data(filename):
     # df = data frame
+    # Using pandas to read data
+    # Skip rows gets past long header
     df = pd.read_csv(filename, sep = "\s+", skiprows = 11, header = None)
+    # Giving columns useful names
     df.columns = ["Index","Date","Time","Sea Level","Residual"]
+    # Cleaning the data removing non-numeric data 
     df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex = True,inplace = True)
+    # Ensure Sea Level is numeric
     df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors = 'coerce')
+    # Combining date and time strings into a single object
     df["datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
+    # Set the new datetime column as the index
     df.set_index("datetime", inplace=True)
-
+    
+    # Return only Sea Level
     return df[["Sea Level"]]
 
     
