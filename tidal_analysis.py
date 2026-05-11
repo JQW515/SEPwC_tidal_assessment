@@ -62,7 +62,9 @@ def join_data(data1, data2):
 def sea_level_rise(data):
     # Cleaning the data
     clean_data = data.dropna
-    
+    # Convert the datetime index into numbers
+    x = mdates.date2num(clean_data.index)
+    y = clean_data['Sea Level'].values
      
     return 
 
