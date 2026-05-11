@@ -64,6 +64,8 @@ def sea_level_rise(data):
     return 
 
 def tidal_analysis(data, constituents, start_datetime):
+    # Remove NaN values - uptide can't handle them
+    clean_data = data.dropna()
     # Create the tide object for the specific constituents
     tide = uptide.Tides(constituents)
     # Tells uptide when the dataset begins
