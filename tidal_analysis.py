@@ -76,8 +76,8 @@ def tidal_analysis(data, constituents, start_datetime):
     start_dt = start_datetime.replace(tzinfo=None) if hasattr(start_datetime, 'tzinfo') and start_datetime.tzinfo else start_datetime
     # Convert the DatetimeIndex into seconds since the start time
     seconds = np.array([(t - start_dt).total_seconds() for t in clean_index])
-    # Performing the analysis
-    amp, pha = uptide.harmonic_analysis.solve_least_squares(tide, data['Sea Level'].values, seconds)
+    # Performing the harmonic analysis
+    amp, pha = uptide.harmonic_analysis(tide, clean_data['Sea Level'].values, seconds)
     
     return amp, pha
 
