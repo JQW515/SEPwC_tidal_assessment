@@ -65,6 +65,8 @@ def sea_level_rise(data):
     # Convert the datetime index into numbers
     x = mdates.date2num(clean_data.index)
     y = clean_data['Sea Level'].values
+    # Performing linear regression
+    result = stats.linregress(x, y)
      
     return 
 
