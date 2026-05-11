@@ -67,6 +67,8 @@ def sea_level_rise(data):
     y = clean_data['Sea Level'].values
     # Performing linear regression
     result = stats.linregress(x, y)
+    # Converting daily rise to annual rise
+    rise_per_year = result.slope * 365
      
     return 
 
