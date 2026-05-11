@@ -70,6 +70,8 @@ def tidal_analysis(data, constituents, start_datetime):
     tide = uptide.Tides(constituents)
     # Tells uptide when the dataset begins
     tide.set_initial_time(start_datetime)
+    # Convert to standard datetime index
+    clean_index = clean_data.index.tz_localize(None) if clean_data.index.tz else clean_data.index
     # Convert the DatetimeIndex into seconds since that start time
     seconds = (data.index - data.index[0]).total_seconds().values
     # Performing the analysis
