@@ -60,6 +60,9 @@ def join_data(data1, data2):
     return pd.concat([data1, data2]).sort_index()
 
 def sea_level_rise(data):
+    # Cleaning the data
+    clean_data = data.dropna
+    
      
     return 
 
