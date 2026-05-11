@@ -68,9 +68,10 @@ def sea_level_rise(data):
     # Performing linear regression
     result = stats.linregress(x, y)
     # Converting daily rise to annual rise
-    rise_per_year = result.slope * 365
-     
-    return rise_per_year
+    
+    return result.slope, result.pvalue
+    
+    
 
 def tidal_analysis(data, constituents, start_datetime):
     # Remove NaN values, uptide can't handle them
