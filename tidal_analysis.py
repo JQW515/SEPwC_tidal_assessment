@@ -72,6 +72,8 @@ def tidal_analysis(data, constituents, start_datetime):
     tide.set_initial_time(start_datetime)
     # Convert to standard datetime index
     clean_index = clean_data.index.tz_localize(None) if clean_data.index.tz else clean_data.index
+    # Make sure start_datetime is timezone-naive
+    start_dt = start_datetime.replace(tzinfo=None) if hasattr(start_datetime, 'tzinfo') and start_datetime.tzinfo else start_datetime
     # Convert the DatetimeIndex into seconds since that start time
     seconds = (data.index - data.index[0]).total_seconds().values
     # Performing the analysis
