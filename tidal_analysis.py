@@ -64,8 +64,22 @@ def sea_level_rise(data):
     return 
 
 def tidal_analysis(data, constituents, start_datetime):
-
-    return
+    # Remove NaN values, uptide can't handle them
+    clean_data = data.dropna()
+    # Create the tide object for the specific constituents
+    tide = uptide.Tides(constituents)
+    # Tells uptide when the dataset begins
+    tide.set_initial_time(start_datetime)
+    # Convert to standard datetime index
+    clean_index = clean_data.index.tz_localize(None) if clean_data.index.tz else clean_data.index
+    # Make sure start_datetime is timezone-naive
+    start_dt = start_datetime.replace(tzinfo=None) if hasattr(start_datetime, 'tzinfo') and start_datetime.tzinfo else start_datetime
+    # Convert the DatetimeIndex into seconds since the start time
+    seconds = np.array([(t - start_dt).total_seconds() for t in clean_index])
+    # Performing the harmonic analysis
+    amp, pha = uptide.harmonic_analysis(tide, clean_data['Sea Level'].values, seconds)
+    
+    return amp, pha
 
 def get_longest_contiguous_data(data):
     # Calculate the differnce between rows within the data
