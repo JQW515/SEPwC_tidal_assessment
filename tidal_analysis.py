@@ -64,12 +64,12 @@ def sea_level_rise(data):
     return 
 
 def tidal_analysis(data, constituents, start_datetime):
-    # Remove NaN values - uptide can't handle them
+    # Remove NaN values, uptide can't handle them
     clean_data = data.dropna()
     # Create the tide object for the specific constituents
     tide = uptide.Tides(constituents)
     # Tells uptide when the dataset begins
-    tide.set_initial_time(data.index[0])
+    tide.set_initial_time(start_datetime)
     # Convert the DatetimeIndex into seconds since that start time
     seconds = (data.index - data.index[0]).total_seconds().values
     # Performing the analysis
