@@ -60,7 +60,7 @@ def join_data(data1, data2):
     return pd.concat([data1, data2]).sort_index()
 
 def sea_level_rise(data):
-    # Cleaning the data
+   # Cleaning the data
     clean_data = data.dropna()
     # Convert the datetime index into numbers
     x = mdates.date2num(clean_data.index)
@@ -68,10 +68,10 @@ def sea_level_rise(data):
     # Performing linear regression
     result = stats.linregress(x, y)
     # Converting daily rise to annual rise
+    annual_slope = result.slope * 365.25
     
-    return result.slope, result.pvalue
-    
-    
+    return annual_slope, result.pvalue
+     
 
 def tidal_analysis(data, constituents, start_datetime):
     # Remove NaN values, uptide can't handle them
