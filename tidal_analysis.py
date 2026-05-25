@@ -128,9 +128,48 @@ def main(args_list=None):
     args = parser.parse_args(args_list)
     dirname = args.directory
     verbose = args.verbose
-
-    print("Add your code here to do things!")
     
+    # Import glob to pattern-match all text documents in the target folder
+    import glob
+    search_path = os.path.join(dirname, "*.txt")
+    files = sorted(glob.glob(search_path))
+    
+    # Safety fallback: If directory is empty, exit gracefully
+    if not files:
+        return
+    
+    # Initialize an empty DataFrame to store the master timeline of combined data
+    all_data = pd.DataFrame()
+    for f in files:
+        # Load an individual year file and sanitize invalid characters (M, N, T)
+        year_data = read_tidal_data(f)
+        # Append and sort chronological timelines while filtering index duplicates
+        all_data = join_data(all_data, year_data)
+    
+    # Run the linear regression engine to extract daily slope and p-value metrics
+    daily_slope, p_val = sea_level_rise(all_data)
+    # Calculate annual rise
+    annual_rise = daily_slope * 365  
+    # Isolate the single longest block of gap-free measurements for harmonic fitting
+    longest_stretch = get_longest_contiguous_data(all_data)
+    # Identify constituents of interest mandated by the UK Tidal Database criteria
+    constituents = ['M2', 'S2']
+    # Run structural wave decomposition starting from the beginning of the continuous section
+    amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
+    
+    # Conditional condenced reporting system
+    if verbose:
+        print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
+        for i, c in enumerate(constituents):
+            print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
+    else:
+        # Silently capture and format analysis metrics into text file if -v is missing
+        output_filename = "tidal_output.txt"
+        with open(output_filename, "w") as out_file:
+            out_file.write(f"Sea-level rise trend: {annual_rise:.6f} m/year\n")
+            for i, c in enumerate(constituents):
+                out_file.write(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}\n")
+         
 
 if __name__ == '__main__':
     main()
