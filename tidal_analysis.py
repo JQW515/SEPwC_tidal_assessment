@@ -137,6 +137,12 @@ def main(args_list=None):
     # Safety fallback: If directory is empty, exit gracefully
     if not files:
         return
+    
+    # Initialize an empty DataFrame to store the master timeline of combined data
+    all_data = pd.DataFrame()
+    for f in files:
+        # Load an individual year file and sanitize invalid characters (M, N, T)
+        year_data = read_tidal_data(f)
 
     print("Add your code here to do things!")
     
