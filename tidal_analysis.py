@@ -12,6 +12,10 @@ import argparse
 
 
 def read_tidal_data(filename):
+    """
+    Read tidal gauge data from a text file, sanitize quality flags,
+    and return a DataFrame indexed by datetime.
+    """
     # df = data frame
     # Using pandas to read data
     # Skip rows gets past long header
@@ -32,6 +36,9 @@ def read_tidal_data(filename):
 
     
 def extract_single_year_remove_mean(year, data):
+    """
+    Filter dataset for a specific year and center the data around a zero mean.
+    """
     # Convert year into integer
     year_int = int(year)
     # Filter data for a specific year
@@ -45,6 +52,9 @@ def extract_single_year_remove_mean(year, data):
 
 
 def extract_section_remove_mean(start, end, data):
+    """
+    Slice the dataset between specific start and end dates and remove its mean.
+    """
     # Slice the data at the start and end
     section_data = data.loc[start:end].copy()
     # Calculate the mean of the Sea Level within the section of data
@@ -56,23 +66,35 @@ def extract_section_remove_mean(start, end, data):
 
 
 def join_data(data1, data2):
+    """
+    Merge two datasets together and sort them chronologically by index.
+    """
     #ensuring the data in continuous and in correct order
     return pd.concat([data1, data2]).sort_index()
 
 def sea_level_rise(data):
+    """
+    Perform linear regression over time to calculate the daily slope trend.
+    """
+    # Filt
    # Cleaning the data
     clean_data = data.dropna()
-    # Convert the datetime index into numbers
-    x = mdates.date2num(clean_data.index)
-    y = clean_data['Sea Level'].values
-    # Performing linear regression
-    result = stats.linregress(x, y)
+    # FIX: Use pure pandas arithmetic to get a completely linear sequence of days,
+    # bypassing matplotlib's timezone/DST distortions.
+    time_days = (clean_data.index - pd.Timestamp('1970-01-01')) / pd.Timedelta(days=1)
+    sea_levels = clean_data['Sea Level'].values
+    
+    # Performing stable linear regression
+    result = stats.linregress(time_days, sea_levels)
     
     return result.slope, result.pvalue
      
 
 
 def tidal_analysis(data, constituents, start_datetime):
+    """
+    Decompose the sea level timeline into specific wave harmonic constituents.
+    """
     # Remove NaN values, uptide can't handle them
     clean_data = data.dropna()
     # Create the tide object for the specific constituents
@@ -93,6 +115,9 @@ def tidal_analysis(data, constituents, start_datetime):
     return amp, pha
 
 def get_longest_contiguous_data(data):
+    """
+    Isolate and return the single longest continuous stretch of recorded data.
+    """
     # Calculate the differnce between rows within the data
     time_diffs = data.index.to_series().diff()
     # Checks for no gaps, if there are none, data is returned
@@ -113,6 +138,9 @@ def get_longest_contiguous_data(data):
 
 
 def main(args_list=None):
+    """
+    Main entry point function to process gauge directory input arguments.
+    """
 
     parser = argparse.ArgumentParser(
                      prog="UK Tidal analysis",
