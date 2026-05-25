@@ -143,6 +143,8 @@ def main(args_list=None):
     for f in files:
         # Load an individual year file and sanitize invalid characters (M, N, T)
         year_data = read_tidal_data(f)
+        # Append and sort chronological timelines while filtering index duplicates
+        all_data = join_data(all_data, year_data)
 
     print("Add your code here to do things!")
     
