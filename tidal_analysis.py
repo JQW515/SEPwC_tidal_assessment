@@ -152,6 +152,8 @@ def main(args_list=None):
     longest_stretch = get_longest_contiguous_data(all_data)
     # Identify constituents of interest mandated by the UK Tidal Database criteria
     constituents = ['M2', 'S2']
+    # Run structural wave decomposition starting from the beginning of the continuous section
+    amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
 
     print("Add your code here to do things!")
     
