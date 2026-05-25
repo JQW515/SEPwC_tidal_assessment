@@ -148,6 +148,8 @@ def main(args_list=None):
     
     # Run the linear regression engine to extract daily slope and p-value metrics
     daily_slope, p_val = sea_level_rise(all_data)
+    # Calculate annual rise
+    annual_rise = daily_slope * 365  
     # Isolate the single longest block of gap-free measurements for harmonic fitting
     longest_stretch = get_longest_contiguous_data(all_data)
     # Identify constituents of interest mandated by the UK Tidal Database criteria
