@@ -128,6 +128,11 @@ def main(args_list=None):
     args = parser.parse_args(args_list)
     dirname = args.directory
     verbose = args.verbose
+    
+    # Import glob to pattern-match all text documents in the target folder
+    import glob
+    search_path = os.path.join(dirname, "*.txt")
+    files = sorted(glob.glob(search_path))
 
     print("Add your code here to do things!")
     
