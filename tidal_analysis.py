@@ -150,6 +150,8 @@ def main(args_list=None):
     daily_slope, p_val = sea_level_rise(all_data)
     # Isolate the single longest block of gap-free measurements for harmonic fitting
     longest_stretch = get_longest_contiguous_data(all_data)
+    # Identify constituents of interest mandated by the UK Tidal Database criteria
+    constituents = ['M2', 'S2']
 
     print("Add your code here to do things!")
     
