@@ -133,6 +133,10 @@ def main(args_list=None):
     import glob
     search_path = os.path.join(dirname, "*.txt")
     files = sorted(glob.glob(search_path))
+    
+    # Safety fallback: If directory is empty, exit gracefully
+    if not files:
+        return
 
     print("Add your code here to do things!")
     
