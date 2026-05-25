@@ -145,6 +145,9 @@ def main(args_list=None):
         year_data = read_tidal_data(f)
         # Append and sort chronological timelines while filtering index duplicates
         all_data = join_data(all_data, year_data)
+    
+    # Run the linear regression engine to extract daily slope and p-value metrics
+    daily_slope, p_val = sea_level_rise(all_data)
 
     print("Add your code here to do things!")
     
