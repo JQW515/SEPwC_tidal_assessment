@@ -154,6 +154,12 @@ def main(args_list=None):
     constituents = ['M2', 'S2']
     # Run structural wave decomposition starting from the beginning of the continuous section
     amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
+    
+    # Conditional condenced reporting system
+    if verbose:
+        print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
+        for i, c in enumerate(constituents):
+            print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
 
     print("Add your code here to do things!")
     
