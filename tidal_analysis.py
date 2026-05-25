@@ -67,10 +67,8 @@ def sea_level_rise(data):
     y = clean_data['Sea Level'].values
     # Performing linear regression
     result = stats.linregress(x, y)
-    # Converting daily rise to annual rise
-    annual_slope = result.slope * 365.25
     
-    return annual_slope, result.pvalue
+    return result.slope, result.pvalue
      
 
 def tidal_analysis(data, constituents, start_datetime):
