@@ -27,8 +27,8 @@ def read_tidal_data(filename):
     # Set the new datetime column as the index
     df.set_index("datetime", inplace=True)
     
-    # Return only Sea Level
-    return df[["Sea Level"]]
+    # Return Sea Level and time 
+    return df[["Sea Level","Time"]]
 
     
 def extract_single_year_remove_mean(year, data):
@@ -71,6 +71,7 @@ def sea_level_rise(data):
     return result.slope, result.pvalue
      
 
+
 def tidal_analysis(data, constituents, start_datetime):
     # Remove NaN values, uptide can't handle them
     clean_data = data.dropna()
@@ -82,6 +83,8 @@ def tidal_analysis(data, constituents, start_datetime):
     clean_index = clean_data.index.tz_localize(None) if clean_data.index.tz else clean_data.index
     # Make sure start_datetime is timezone-naive
     start_dt = start_datetime.replace(tzinfo=None) if hasattr(start_datetime, 'tzinfo') and start_datetime.tzinfo else start_datetime
+    # Establish our time-anchor point
+    tide.set_initial_time(start_dt)
     # Convert the DatetimeIndex into seconds since the start time
     seconds = np.array([(t - start_dt).total_seconds() for t in clean_index])
     # Performing the harmonic analysis
