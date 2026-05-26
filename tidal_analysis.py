@@ -191,14 +191,18 @@ def main(args_list=None):
         print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
         for i, c in enumerate(constituents):
             print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
-    else:
-        # Silently capture and format analysis metrics into text file if -v is missing
-        output_filename = "tidal_output.txt"
-        with open(output_filename, "w" encoding="utf-8") as out_file:
-            out_file.write(f"Sea-level rise trend: {annual_rise:.6f} m/year\n")
-            for i, c in enumerate(constituents):
-                out_file.write(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}\n")
-         
+        else:
+            # Silently capture and format analysis metrics into text file if -v is missing
+            output_filename = "tidal_output.txt"
+            with open(output_filename, "w") as out_file:
+                out_file.write(f"Sea-level rise trend: {annual_rise:.6f} m/year\n")
+                for i, c in enumerate(constituents):
+                    out_file.write(
+                        f"Constituent {c} -> "
+                        f"Amplitude: {amps[i]:.4f} m, "
+                        f"Phase: {phases[i]:.4f}\n"
+                    )
 
+                        
 if __name__ == '__main__':
-    main()
+    main() 
