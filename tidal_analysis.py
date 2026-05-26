@@ -160,8 +160,7 @@ def main(args_list=None):
     dirname = args.directory
     verbose = args.verbose
 
-    search_path = os.path.join(dirname, "*.txt")
-    files = sorted(glob.glob(search_path))
+    files = sorted(glob.glob(os.path.join(dirname, "*.txt")))
 
     # Safety fallback: If directory is empty, exit gracefully
     if not files:
