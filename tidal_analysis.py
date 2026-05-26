@@ -13,7 +13,7 @@ import glob
 
 def read_tidal_data(filename):
     """
-    Read tidal gauge data from a text file, sanitize quality flags,
+    Read tidal gauge data from a text file, sanitise quality flags,
     and return a DataFrame indexed by datetime.
     """
     # df = data frame
