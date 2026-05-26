@@ -21,7 +21,7 @@ def read_tidal_data(filename):
     df = pd.read_csv(filename, sep=r"\s+", skiprows=11, header=None)
     # Giving columns useful names
     df.columns = ["Index","Date","Time","Sea Level","Residual"]
-    # Cleaning the data removing non-numeric data 
+    # Cleaning the data removing non-numeric data
     df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex=True,inplace=True)
     # Ensure Sea Level is numeric
     df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors='coerce')
@@ -29,11 +29,11 @@ def read_tidal_data(filename):
     df["datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
     # Set the new datetime column as the index
     df.set_index("datetime", inplace=True)
-    
-    # Return Sea Level and time 
+
+    # Return Sea Level and time
     return df[["Sea Level","Time"]]
 
-    
+
 def extract_single_year_remove_mean(year, data):
     """
     Filter dataset for a specific year and center the data around a zero mean.
@@ -60,7 +60,7 @@ def extract_section_remove_mean(start, end, data):
     section_mean = section_data["Sea Level"].mean()
     # Subtract the mean from the Sea Level data
     section_data["Sea Level"] = section_data["Sea Level"] - section_mean
-    
+
     return section_data
 
 
@@ -76,18 +76,18 @@ def sea_level_rise(data):
     Perform linear regression over time to calculate the daily slope trend.
     """
     # Filt
-   # Cleaning the data
+    # Cleaning the data
     clean_data = data.dropna()
     # FIX: Use pure pandas arithmetic to get a completely linear sequence of days,
     # bypassing matplotlib's timezone/DST distortions.
     time_days = (clean_data.index - pd.Timestamp('1970-01-01')) / pd.Timedelta(days=1)
     sea_levels = clean_data['Sea Level'].values
-    
+
     # Performing stable linear regression
     result = stats.linregress(time_days, sea_levels)
-    
+
     return result.slope, result.pvalue
-     
+
 
 
 def tidal_analysis(data, constituents, start_datetime):
@@ -113,7 +113,7 @@ def tidal_analysis(data, constituents, start_datetime):
     seconds = np.array([(t - start_dt).total_seconds() for t in clean_index])
     # Performing the harmonic analysis
     amp, pha = uptide.harmonic_analysis(tide, clean_data['Sea Level'].values, seconds)
-    
+
     return amp, pha
 
 def get_longest_contiguous_data(data):
@@ -159,14 +159,14 @@ def main(args_list=None):
     args = parser.parse_args(args_list)
     dirname = args.directory
     verbose = args.verbose
-    
+
     search_path = os.path.join(dirname, "*.txt")
     files = sorted(glob.glob(search_path))
-    
+
     # Safety fallback: If directory is empty, exit gracefully
     if not files:
         return
-    
+
     # Initialize an empty DataFrame to store the master timeline of combined data
     all_data = pd.DataFrame()
     for f in files:
@@ -174,18 +174,18 @@ def main(args_list=None):
         year_data = read_tidal_data(f)
         # Append and sort chronological timelines while filtering index duplicates
         all_data = join_data(all_data, year_data)
-    
+
     # Run the linear regression engine to extract daily slope and p-value metrics
     daily_slope = sea_level_rise(all_data)
     # Calculate annual rise
-    annual_rise = daily_slope * 365  
+    annual_rise = daily_slope * 365
     # Isolate the single longest block of gap-free measurements for harmonic fitting
     longest_stretch = get_longest_contiguous_data(all_data)
     # Identify constituents of interest mandated by the UK Tidal Database criteria
     constituents = ['M2', 'S2']
     # Run structural wave decomposition starting from the beginning of the continuous section
     amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
-    
+
     # Conditional condenced reporting system
     if verbose:
         print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
@@ -203,6 +203,6 @@ def main(args_list=None):
                         f"Phase: {phases[i]:.4f}\n"
                     )
 
-                        
+
 if __name__ == '__main__':
-    main() 
+    main()
