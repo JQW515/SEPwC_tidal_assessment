@@ -17,13 +17,13 @@ def read_tidal_data(filename):
     # df = data frame
     # Using pandas to read data
     # Skip rows gets past long header
-    df = pd.read_csv(filename, sep = "\s+", skiprows = 11, header = None)
+    df = pd.read_csv(filename, sep=r"\s+", skiprows=11, header=None)
     # Giving columns useful names
     df.columns = ["Index","Date","Time","Sea Level","Residual"]
     # Cleaning the data removing non-numeric data 
-    df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex = True,inplace = True)
+    df.replace(to_replace = ".*[A-Z]$",value = {'Sea Level':np.nan},regex=True,inplace=True)
     # Ensure Sea Level is numeric
-    df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors = 'coerce')
+    df['Sea Level'] = pd.to_numeric(df['Sea Level'], errors='coerce')
     # Combining date and time strings into a single object
     df["datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
     # Set the new datetime column as the index
@@ -102,7 +102,10 @@ def tidal_analysis(data, constituents, start_datetime):
     # Convert to standard datetime index
     clean_index = clean_data.index.tz_localize(None) if clean_data.index.tz else clean_data.index
     # Make sure start_datetime is timezone-naive
-    start_dt = start_datetime.replace(tzinfo=None) if hasattr(start_datetime, 'tzinfo') and start_datetime.tzinfo else start_datetime
+    if hasattr(start_datetime, "tzinfo") and start_datetime.tzinfo:
+        start_dt = start_datetime.replace(tzinfo=None)
+    else:
+        start_dt = start_datetime
     # Establish our time-anchor point
     tide.set_initial_time(start_dt)
     # Convert the DatetimeIndex into seconds since the start time
