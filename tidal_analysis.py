@@ -1,3 +1,7 @@
+# Copyright (c) 2026 Toby Read
+# Some rights reserved
+# AI Assistance Notice: Developed with assistance from Gemini (Google AI)
+
 """Tidal analysis tools for sea level and harmonic tidal analysis."""
 import argparse
 import os
@@ -13,7 +17,7 @@ import glob
 
 def read_tidal_data(filename):
     """
-    Read tidal gauge data from a text file, sanitize quality flags,
+    Read tidal gauge data from a text file, sanitise quality flags,
     and return a DataFrame indexed by datetime.
     """
     # df = data frame
