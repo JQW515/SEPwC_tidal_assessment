@@ -1,8 +1,7 @@
 """Tidal analysis tools for sea level and harmonic tidal analysis."""
 import argparse
 import os
-import datetime  
-
+import datetime
 
 import numpy as np
 import pandas as pd
