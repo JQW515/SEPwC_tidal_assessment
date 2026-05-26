@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import uptide
 from scipy import stats
+import glob
 
 
 
@@ -159,8 +160,6 @@ def main(args_list=None):
     dirname = args.directory
     verbose = args.verbose
     
-    # Import glob to pattern-match all text documents in the target folder
-    import glob
     search_path = os.path.join(dirname, "*.txt")
     files = sorted(glob.glob(search_path))
     
