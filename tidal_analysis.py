@@ -1,14 +1,12 @@
-# import the modules we need
-import pandas as pd
-import datetime
-import os
-import numpy as np
-import uptide
-import pytz
-import math
-from scipy import stats
-import matplotlib.dates as mdates
+"""Tidal analysis tools for sea level and harmonic tidal analysis."""
 import argparse
+import os
+
+import numpy as np
+import pandas as pd
+import uptide
+from scipy import stats
+
 
 
 def read_tidal_data(filename):
