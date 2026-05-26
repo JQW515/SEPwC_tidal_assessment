@@ -176,7 +176,7 @@ def main(args_list=None):
         all_data = join_data(all_data, year_data)
     
     # Run the linear regression engine to extract daily slope and p-value metrics
-    daily_slope, p_val = sea_level_rise(all_data)
+    daily_slope = sea_level_rise(all_data)
     # Calculate annual rise
     annual_rise = daily_slope * 365  
     # Isolate the single longest block of gap-free measurements for harmonic fitting
