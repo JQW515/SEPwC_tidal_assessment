@@ -177,7 +177,7 @@ def main(args_list=None):
         all_data = join_data(all_data, year_data)
 
     # Run the linear regression engine to extract daily slope and p-value metrics
-    daily_slope = sea_level_rise(all_data)
+    daily_slope, p_value = sea_level_rise(all_data)
     # Calculate annual rise
     annual_rise = daily_slope * 365
     # Isolate the single longest block of gap-free measurements for harmonic fitting
@@ -192,17 +192,17 @@ def main(args_list=None):
         print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
         for i, c in enumerate(constituents):
             print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
-        else:
-            # Silently capture and format analysis metrics into text file if -v is missing
-            output_filename = "tidal_output.txt"
-            with open(output_filename, "w") as out_file:
-                out_file.write(f"Sea-level rise trend: {annual_rise:.6f} m/year\n")
-                for i, c in enumerate(constituents):
-                    out_file.write(
-                        f"Constituent {c} -> "
-                        f"Amplitude: {amps[i]:.4f} m, "
-                        f"Phase: {phases[i]:.4f}\n"
-                    )
+    else:
+        # Silently capture and format analysis metrics into text file if -v is missing
+        output_filename = "tidal_output.txt"
+        with open(output_filename, "w") as out_file:
+            out_file.write(f"Sea-level rise trend: {annual_rise:.6f} m/year\n")
+            for i, c in enumerate(constituents):
+                out_file.write(
+                    f"Constituent {c} -> "
+                    f"Amplitude: {amps[i]:.4f} m, "
+                    f"Phase: {phases[i]:.4f}\n"
+                )
 
 
 if __name__ == '__main__':
