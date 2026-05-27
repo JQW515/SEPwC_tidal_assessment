@@ -158,6 +158,8 @@ def find_extreme_tides(data):
     # Indentifying data and time of max and min data
     max_time = clean_data['Sea Level'].idxmax()
     min_time = clean_data['Sea Level'].idxmin()
+    
+    return max_level, max_time, min_level, min_time
 
 
 def main(args_list=None):
