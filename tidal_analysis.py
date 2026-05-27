@@ -143,6 +143,11 @@ def get_longest_contiguous_data(data):
 
     return longest_data
 
+def find_extreme_tides(data):
+    """
+    Find the maximum and minimum sea levels along with their exact timestamps.
+    """
+
 
 def main(args_list=None):
     """
@@ -181,11 +186,10 @@ def main(args_list=None):
 
     # Run the linear regression engine to extract daily slope and p-value metrics
     daily_slope, p_value = sea_level_rise(all_data)
-    # Calculate annual rise
     annual_rise = daily_slope * 365
     # Isolate the single longest block of gap-free measurements for harmonic fitting
     longest_stretch = get_longest_contiguous_data(all_data)
-    # Identify constituents of interest mandated by the UK Tidal Database criteria
+    # Identify constituents of interest
     constituents = ['M2', 'S2']
     # Run structural wave decomposition starting from the beginning of the continuous section
     amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
