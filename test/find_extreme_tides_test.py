@@ -7,6 +7,7 @@ Created on Wed May 27 12:54:15 2026
 
 def     test_find_extreme_tides(self):
         """Test to verify that find_extreme_tides identifies correct maximum and minimum data."""
+        from tidal_analysis import find_extreme_tides
         import pandas as pd
         # 1. Creating fake data sets
         timestamps = pd.to_datetime([
@@ -19,13 +20,13 @@ def     test_find_extreme_tides(self):
         # Setting sea levels
         sea_levels = [1.2, 0.5, 5.5, 3.4]
         
-        # FIX: Explicitly bundle timestamps and sea levels into a Pandas DataFrame table
+        # Bundle timestamps and sea levels into a Pandas DataFrame table
         fake_data = pd.DataFrame({'Sea Level': sea_levels}, index=timestamps)
 
-        # 2. Calling extreme tides function with new fake data
+        # Calling extreme tides function with new fake data
         max_val, max_time, min_val, min_time = find_extreme_tides(fake_data)
 
-        # 3. Assert (verify) that the outputs match exactly what we expect
+        # Assert (verify) that the outputs match exactly what we expect
         assert max_val == 5.5, f"Expected max level 5.5, but got {max_val}"
         assert max_time == pd.Timestamp('2026-01-01 02:00:00'), f"Expected max time 02:00, but got {max_time}"
         
