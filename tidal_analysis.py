@@ -206,6 +206,8 @@ def main(args_list=None):
     constituents = ['M2', 'S2']
     # Run structural wave decomposition starting from the beginning of the continuous section
     amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
+    # Run extreme tide detection engine
+    max_val, max_time, min_val, min_time = find_extreme_tides(all_data)
 
     # Conditional condenced reporting system
     if verbose:
