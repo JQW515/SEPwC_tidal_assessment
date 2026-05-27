@@ -18,3 +18,6 @@ def test_find_extreme_tides(self):
     # Setting sea levels
     sea_levels = [1.2, 0.5, 5.5, 3.4]
     
+    # Calling extreme tides function with new fake data
+    max_val, max_time, min_val, min_time = find_extreme_tides(fake_data)
+    
