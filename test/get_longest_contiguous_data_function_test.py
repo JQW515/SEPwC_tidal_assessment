@@ -1,3 +1,8 @@
+# Copyright (c) 2026 Toby Read
+# Some rights reserved
+# AI Assistance Notice: Developed with assistance from Gemini (Google AI)
+
+
 import pandas as pd
 import numpy as np
 from tidal_analysis import get_longest_contiguous_data
