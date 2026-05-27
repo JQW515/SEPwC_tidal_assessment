@@ -214,6 +214,10 @@ def main(args_list=None):
         print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
         for i, c in enumerate(constituents):
             print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
+        # Display the extreme points on-screen when running with -v
+        if max_val is not None:
+            print(f"Highest Tide: {max_val:.3f} m on {max_time}")
+            print(f"Lowest Tide:  {min_val:.3f} m on {min_time}")
     else:
         # Silently capture and format analysis metrics into text file if -v is missing
         output_filename = "tidal_output.txt"
