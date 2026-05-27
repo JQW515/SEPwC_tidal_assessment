@@ -143,6 +143,24 @@ def get_longest_contiguous_data(data):
 
     return longest_data
 
+def find_extreme_tides(data):
+    """
+    Find the maximum and minimum sea levels along with their exact timestamps.
+    """
+    # Cleaning data
+    clean_data = data.dropna()
+    if clean_data.empty:
+        return None, None, None, None
+    
+    # Finding min and max sea level data
+    max_level = clean_data['Sea Level'].max()
+    min_level = clean_data['Sea Level'].min()
+    # Indentifying data and time of max and min data
+    max_time = clean_data['Sea Level'].idxmax()
+    min_time = clean_data['Sea Level'].idxmin()
+    
+    return max_level, max_time, min_level, min_time
+
 
 def main(args_list=None):
     """
@@ -181,20 +199,25 @@ def main(args_list=None):
 
     # Run the linear regression engine to extract daily slope and p-value metrics
     daily_slope, p_value = sea_level_rise(all_data)
-    # Calculate annual rise
     annual_rise = daily_slope * 365
     # Isolate the single longest block of gap-free measurements for harmonic fitting
     longest_stretch = get_longest_contiguous_data(all_data)
-    # Identify constituents of interest mandated by the UK Tidal Database criteria
+    # Identify constituents of interest
     constituents = ['M2', 'S2']
     # Run structural wave decomposition starting from the beginning of the continuous section
     amps, phases = tidal_analysis(longest_stretch, constituents, longest_stretch.index[0])
+    # Run extreme tide detection engine
+    max_val, max_time, min_val, min_time = find_extreme_tides(all_data)
 
     # Conditional condenced reporting system
     if verbose:
         print(f"Sea-level rise trend: {annual_rise:.6f} m/year")
         for i, c in enumerate(constituents):
             print(f"Constituent {c} -> Amplitude: {amps[i]:.4f} m, Phase: {phases[i]:.4f}")
+        # Display the extreme points on-screen when running with -v
+        if max_val is not None:
+            print(f"Highest Tide: {max_val:.3f} m on {max_time}")
+            print(f"Lowest Tide:  {min_val:.3f} m on {min_time}")
     else:
         # Silently capture and format analysis metrics into text file if -v is missing
         output_filename = "tidal_output.txt"
@@ -206,6 +229,10 @@ def main(args_list=None):
                     f"Amplitude: {amps[i]:.4f} m, "
                     f"Phase: {phases[i]:.4f}\n"
                 )
+            # Write the extreme observations into the output text document
+            if max_val is not None:
+                out_file.write(f"Highest Tide: {max_val:.3f} m on {max_time}\n")
+                out_file.write(f"Lowest Tide:  {min_val:.3f} m on {min_time}\n")
 
 
 if __name__ == '__main__':
