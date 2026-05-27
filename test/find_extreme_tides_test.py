@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May 27 12:54:15 2026
+# Copyright (c) 2026 Toby Read
+# Some rights reserved
+# AI Assistance Notice: Developed with assistance from Gemini (Google AI)
 
-@author: tobyr
-"""
+
 from tidal_analysis import find_extreme_tides
 import pandas as pd
 
