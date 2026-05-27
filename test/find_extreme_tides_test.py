@@ -15,4 +15,6 @@ def test_find_extreme_tides(self):
             '2026-01-01 02:00:00',
             '2026-01-01 03:00:00'
         ])
+    # Setting sea levels
+    sea_levels = [1.2, 0.5, 5.5, 3.4]
     
