@@ -8,7 +8,7 @@ import pandas as pd
 
 def     test_find_extreme_tides():
         """Test to verify that find_extreme_tides identifies correct maximum and minimum data."""
-        # 1. Creating fake data sets
+        # Creating fake data sets
         timestamps = pd.to_datetime([
             '2026-01-01 00:00:00',
             '2026-01-01 01:00:00',
