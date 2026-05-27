@@ -147,9 +147,14 @@ def find_extreme_tides(data):
     """
     Find the maximum and minimum sea levels along with their exact timestamps.
     """
+    # Cleaning data
     clean_data = data.dropna()
     if clean_data.empty:
         return None, None, None, None
+    
+    # Finding min and max sea level data
+    max_level = clean_data['Sea Level'].max()
+    min_level = clean_data['Sea Level'].min()
 
 
 def main(args_list=None):
