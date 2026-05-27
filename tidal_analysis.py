@@ -83,7 +83,6 @@ def sea_level_rise(data):
     # Filt
     # Cleaning the data
     clean_data = data.dropna()
-    # FIX: Use pure pandas arithmetic to get a completely linear sequence of days,
     # bypassing matplotlib's timezone/DST distortions.
     time_days = (clean_data.index - pd.Timestamp('1970-01-01')) / pd.Timedelta(days=1)
     sea_levels = clean_data['Sea Level'].values
