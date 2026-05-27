@@ -229,6 +229,10 @@ def main(args_list=None):
                     f"Amplitude: {amps[i]:.4f} m, "
                     f"Phase: {phases[i]:.4f}\n"
                 )
+            # Write the extreme observations into the output text document
+            if max_val is not None:
+                out_file.write(f"Highest Tide: {max_val:.3f} m on {max_time}\n")
+                out_file.write(f"Lowest Tide:  {min_val:.3f} m on {min_time}\n")
 
 
 if __name__ == '__main__':
